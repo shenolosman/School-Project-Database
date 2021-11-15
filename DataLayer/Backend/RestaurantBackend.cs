@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DataLayer.Backend
 {
-    class RestaurantBackend
+   public class RestaurantBackend
     {
     }
 }
