@@ -7,13 +7,11 @@ using System.Threading.Tasks;
 
 namespace DataLayer.Model
 {
-    internal class Restaurant
+    public class Restaurant
     {
         public int Id { get; set; }
-        [Required]
-        public string RestaurantName { get; set; }
-        [Required]
-        public string RestaurantAdress { get; set; }
-     //   public virtual ICollection<FoodBoxes> FoodBoxes { get; set; }
+        [Required] public string RestaurantName { get; set; }
+        [Required] public string RestaurantAdress { get; set; }
+        public virtual ICollection<FoodBoxes> FoodBoxes { get; set; }
     }
 }

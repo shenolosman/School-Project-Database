@@ -29,7 +29,8 @@ namespace DataLayer.Data
                 .HasIndex(u => new
                 {
                     u.Email,
-                    u.Adress
+                    u.Adress,
+                    u.UserName
                 }).IsUnique();
             modelBuilder.Entity<Category>()
                 .HasIndex(u => new
@@ -47,10 +48,10 @@ namespace DataLayer.Data
         {
             var categories = new Category[]
             {
-                new () { CategoryName = "Vegan"}, //category[0]
-                new () { CategoryName ="Meat"},//category[1]
-                new () { CategoryName ="Fish"},//category[2]
-                new(){CategoryName = "Bakery"}//category[3]
+                new () { CategoryName = "vegan"}, //category[0]
+                new () { CategoryName ="meat"},//category[1]
+                new () { CategoryName ="fish"},//category[2]
+                new(){CategoryName = "bakery"}//category[3]
             };
             AddRange(categories);
             var restaurans = new Restaurant[]
@@ -77,42 +78,48 @@ namespace DataLayer.Data
             AddRange(customers);
             var orders = new Order[]
             {
-                new(){OrderDate = DateTime.Now,Id=1}, //order[0]
-                new(){OrderDate = DateTime.Now.AddDays(-11),Id=2}, //order[1]
-                new(){OrderDate = DateTime.Now.AddDays(-12),Id=3}, //order[2]
-                new(){OrderDate = DateTime.Now.AddDays(-13),Id=4}, //order[3]
-                new(){OrderDate = DateTime.Now.AddDays(-14),Id=5}, //order[4]
-                new(){OrderDate = DateTime.Now,Id=6}, //order[5]
-                new(){OrderDate = DateTime.Now,Id=2}, //order[6]
-                new(){OrderDate = DateTime.Now.AddDays(-1),Id=3}, //order[7]
-                new(){OrderDate = DateTime.Now.AddDays(-2),Id=4}, //order[8]
-                new(){OrderDate = DateTime.Now.AddDays(-3),Id=6}, //order[9]
-                new(){OrderDate = DateTime.Now.AddDays(-4),Id=1}, //order[10]
-                new(){OrderDate = DateTime.Now,Id=5}, //order[11]
+                new(){OrderDate = DateTime.Now,Customer =  customers[0]}, //order[0]
+                new(){OrderDate = DateTime.Now.AddDays(-11),Customer = customers[1]}, //order[1]
+                new(){OrderDate = DateTime.Now.AddDays(-12),Customer = customers[2]}, //order[2]
+                new(){OrderDate = DateTime.Now.AddDays(-13),Customer = customers[3]}, //order[3]
+                new(){OrderDate = DateTime.Now.AddDays(-14),Customer = customers[4]}, //order[4]
+                new(){OrderDate = DateTime.Now,Customer = customers[5]}, //order[5]
+                new(){OrderDate = DateTime.Now,Customer = customers[4]}, //order[6]
+                new(){OrderDate = DateTime.Now.AddDays(-1),Customer = customers[5]}, //order[7]
+                new(){OrderDate = DateTime.Now.AddDays(-2),Customer = customers[2]}, //order[8]
+                new(){OrderDate = DateTime.Now.AddDays(-3),Customer = customers[1]}, //order[9]
+                new(){OrderDate = DateTime.Now.AddDays(-4),Customer = customers[0]}, //order[10]
+                new(){OrderDate = DateTime.Now,Customer =  customers[3]}, //order[11]
             };
             AddRange(orders);
 
             var foodboxes = new FoodBoxes[]
             {
-                new() {FoodName = "Vegan Spiecy", UnitPrice = 79.88, ExpireName = DateTime.Now.AddDays(4), Restaurant = restaurans[0], Category = categories[0], Orders = orders[0]},
-                new() {FoodName = "Vegan Rulle", UnitPrice = 89.88, ExpireName = DateTime.Now.AddDays(5), Restaurant = restaurans[0], Category = categories[0], Orders = orders[1]},
-                new() {FoodName = "Kött bullar", UnitPrice = 99.88, ExpireName = DateTime.Now.AddDays(3), Restaurant = restaurans[1], Category = categories[1], Orders = orders[2]},
-                new() {FoodName = "Fishchips", UnitPrice = 79.88, ExpireName = DateTime.Now.AddDays(4), Restaurant = restaurans[3], Category = categories[2], Orders = orders[3]},
-                new() {FoodName = "Dolma", UnitPrice = 69.98, ExpireName = DateTime.Now.AddDays(10), Restaurant = restaurans[2], Category = categories[0], Orders = orders[4]},
-                new() {FoodName = "Rotten Fish", UnitPrice = 29.88, ExpireName = DateTime.Now.AddDays(99), Restaurant = restaurans[5], Category = categories[2], Orders = orders[5]},
-                new() {FoodName = "Fralle", UnitPrice = 39.88, ExpireName = DateTime.Now.AddDays(4), Restaurant = restaurans[4], Category = categories[3], Orders = orders[5]},
-                new() {FoodName = "Cheese Sandwich", UnitPrice = 49.88, ExpireName = DateTime.Now.AddDays(-14), Restaurant = restaurans[3], Category = categories[3], Orders = null},
-                new() {FoodName = "Vegan Spiecy", UnitPrice = 79.88, ExpireName = DateTime.Now.AddDays(4), Restaurant = restaurans[0], Category = categories[0], Orders = orders[0]},
-                new() {FoodName = "Vegan Rulle", UnitPrice = 99.98, ExpireName = DateTime.Now.AddDays(4), Restaurant = restaurans[0], Category = categories[0], Orders = orders[1]},
-                new() {FoodName = "Kött bullar", UnitPrice = 119.88, ExpireName = DateTime.Now.AddDays(4), Restaurant = restaurans[1], Category = categories[1], Orders = orders[2]},
-                new() {FoodName = "Fish chips", UnitPrice = 79.88, ExpireName = DateTime.Now.AddDays(5), Restaurant = restaurans[3], Category = categories[2], Orders = orders[3]},
-                new() {FoodName = "Dolma", UnitPrice = 69.88, ExpireName = DateTime.Now.AddDays(5), Restaurant = restaurans[2], Category = categories[1], Orders = orders[4]},
-                new() {FoodName = "Rotten Fish", UnitPrice = 39.88, ExpireName = DateTime.Now.AddDays(-22), Restaurant = restaurans[3], Category = categories[2], Orders = null},
-                new() {FoodName = "Fralle", UnitPrice = 49.88, ExpireName = DateTime.Now.AddDays(-15), Restaurant = restaurans[2], Category = categories[3], Orders = null},
-                new() {FoodName = "Cheese Sandwich", UnitPrice = 59.88, ExpireName = DateTime.Now.AddDays(-14), Restaurant = restaurans[0], Category = categories[3],Orders = null},
+                new() {FoodName = "Vegan Spiecy", UnitPrice = 79.88, ExpireDate = DateTime.Now.AddDays(4), Restaurant = restaurans[0], Category = categories[0], Orders = orders[0]},
+                new() {FoodName = "Vegan Rulle", UnitPrice = 89.88, ExpireDate = DateTime.Now.AddDays(5), Restaurant = restaurans[0], Category = categories[0], Orders = orders[1]},
+                new() {FoodName = "Kött bullar", UnitPrice = 99.88, ExpireDate = DateTime.Now.AddDays(3), Restaurant = restaurans[1], Category = categories[1], Orders = orders[2]},
+                new() {FoodName = "Fishchips", UnitPrice = 79.88, ExpireDate = DateTime.Now.AddDays(4), Restaurant = restaurans[3], Category = categories[2], Orders = orders[3]},
+                new() {FoodName = "Dolma", UnitPrice = 69.98, ExpireDate = DateTime.Now.AddDays(10), Restaurant = restaurans[2], Category = categories[0], Orders = orders[4]},
+                new() {FoodName = "Rotten Fish", UnitPrice = 29.88, ExpireDate = DateTime.Now.AddDays(99), Restaurant = restaurans[5], Category = categories[2], Orders = orders[5]},
+                new() {FoodName = "Fralle", UnitPrice = 39.88, ExpireDate = DateTime.Now.AddDays(4), Restaurant = restaurans[4], Category = categories[3], Orders = orders[5]},
+                new() {FoodName = "Cheese Sandwich", UnitPrice = 49.88, ExpireDate = DateTime.Now.AddDays(-14), Restaurant = restaurans[3], Category = categories[3], Orders = null},
+                new() {FoodName = "Vegan Spiecy", UnitPrice = 79.88, ExpireDate = DateTime.Now.AddDays(4), Restaurant = restaurans[0], Category = categories[0], Orders = orders[0]},
+                new() {FoodName = "Vegan Rulle", UnitPrice = 99.98, ExpireDate = DateTime.Now.AddDays(4), Restaurant = restaurans[0], Category = categories[0], Orders = orders[1]},
+                new() {FoodName = "Kött bullar", UnitPrice = 119.88, ExpireDate = DateTime.Now.AddDays(4), Restaurant = restaurans[1], Category = categories[1], Orders = orders[2]},
+                new() {FoodName = "Fish chips", UnitPrice = 79.88, ExpireDate = DateTime.Now.AddDays(5), Restaurant = restaurans[3], Category = categories[2], Orders = orders[3]},
+                new() {FoodName = "Dolma", UnitPrice = 69.88, ExpireDate = DateTime.Now.AddDays(5), Restaurant = restaurans[2], Category = categories[1], Orders = orders[4]},
+                new() {FoodName = "Rotten Fish", UnitPrice = 39.88, ExpireDate = DateTime.Now.AddDays(-22), Restaurant = restaurans[3], Category = categories[2], Orders = null},
+                new() {FoodName = "Fralle", UnitPrice = 49.88, ExpireDate = DateTime.Now.AddDays(-15), Restaurant = restaurans[2], Category = categories[3], Orders = null},
+                new() {FoodName = "Cheese Sandwich", UnitPrice = 59.88, ExpireDate = DateTime.Now.AddDays(-14), Restaurant = restaurans[0], Category = categories[3],Orders = null},
+
             };
+            /*  vegan  /category[0] 0
+                meat   /category[1] 0
+                fish   /category[2] 1
+                bakery /category[3] 3           */
             AddRange(foodboxes);
             SaveChanges();
+
         }
 
     }

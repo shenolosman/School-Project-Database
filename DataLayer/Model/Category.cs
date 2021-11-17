@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace DataLayer.Model
 {
-    internal class Category
+    public class Category
     {
         public int Id { get; set; }
         public string CategoryName { get; set; }
-        //public virtual ICollection<FoodBoxes> FoodBoxes { get; set; }
+        public virtual ICollection<FoodBoxes> FoodBoxes { get; set; }
     }
 }
