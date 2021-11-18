@@ -15,23 +15,24 @@ namespace ConsoleApp
             while (true)
             {
                 Console.WriteLine("Pick an option");
-                Console.WriteLine("R : Admin: Reset database");
-                Console.WriteLine("1 : Userbackend: alla oköpta matlådor i alla restauranger by typ av mat");
-                Console.WriteLine("2 : Userbackend: att köpa ett givet lunchlåde objekt");
-                Console.WriteLine("3 : Admin: se alla användare");
-                Console.WriteLine("4 : Admin: ta bort/inaktivera en användare utifrån användarnamn");
-                Console.WriteLine("5 : Admin: se alla restauranger");
-                Console.WriteLine("6 : Admin: lägga till ett nytt restaurang objekt");
-                Console.WriteLine("7 : Restaurant: alla sålda matlådor för ett restaurang objekt");
-                Console.WriteLine("8 : Restaurant: lägga till ett nytt matlådeobjekt för en restaurang");
-                Console.WriteLine("9 : Categories: Se alla categories");
-                Console.WriteLine("\n\n");
+                Console.WriteLine("R : Reset database");
+                Console.WriteLine("1 : Alla oköpta matlådor");
+                Console.WriteLine("2 : Köpa ett lunchlåde");
+                Console.WriteLine("3 : Se alla användare");
+                Console.WriteLine("4 : Inaktivera en användare");
+                Console.WriteLine("5 : Se alla restauranger");
+                Console.WriteLine("6 : Lägga till restaurang");
+                Console.WriteLine("7 : Sålda matlådor för ett restaurang");
+                Console.WriteLine("8 : Lägga till ett nytt matlåde");
+                Console.WriteLine("9 : Se alla categories");
+                Console.WriteLine("\nFor exit please press \"ESC\" button\n");
                 var keyinfo = Console.ReadKey();
                 Console.Clear();
                 if (keyinfo.Key == ConsoleKey.R)
                 {
                     AdminBackend.PrepDatabase();
                     Console.WriteLine("Database initialized!");
+                    ClearScreen();
                 }
                 if (keyinfo.Key == ConsoleKey.D1)
                 {
@@ -49,6 +50,7 @@ namespace ConsoleApp
                     }
                     else
                         Console.WriteLine("In that category all foodboxes are sold!");
+                    ClearScreen();
                 }
                 if (keyinfo.Key == ConsoleKey.D2)
                 {
@@ -76,6 +78,7 @@ namespace ConsoleApp
                     }
                     else
                         Console.WriteLine("Next time!");
+                    ClearScreen();
                 }
                 if (keyinfo.Key == ConsoleKey.D3)
                 {
@@ -84,6 +87,7 @@ namespace ConsoleApp
                     {
                         Console.WriteLine($"Name: {item.FirstName} {item.LastName} and username: {item.UserName}\n");
                     }
+                    ClearScreen();
                 }
                 if (keyinfo.Key == ConsoleKey.D4)
                 {
@@ -96,6 +100,7 @@ namespace ConsoleApp
                     var delete = Console.ReadLine();
                     admin.DeleteCustomer(delete);
                     Console.WriteLine("{0} user deleted!", delete);
+                    ClearScreen();
                 }
                 if (keyinfo.Key == ConsoleKey.D5)
                 {
@@ -104,6 +109,7 @@ namespace ConsoleApp
                     {
                         Console.WriteLine($"\nRestauran name: {item.RestaurantName} and adress: {item.RestaurantAdress}");
                     }
+                    ClearScreen();
                 }
                 if (keyinfo.Key == ConsoleKey.D6)
                 {
@@ -114,20 +120,22 @@ namespace ConsoleApp
                     var adress = Console.ReadLine();
                     admin.AddRestaurants(name, adress);
                     Console.WriteLine("You have created new restaurant! Name is {0}", name);
+                    ClearScreen();
                 }
                 if (keyinfo.Key == ConsoleKey.D7)
                 {
-                    Console.WriteLine("Write restaurant for to see sold foodboxes");
+                    foreach (var item in admin.AllRestaurants()) Console.WriteLine($"Restaurant id: {item.Id}, name: {item.RestaurantName}");
+                    Console.WriteLine("\nWrite restaurant for to see sold foodboxes");
                     var myrestaurant = restaurant.SoldFoodboxesForOneRestaurant(Console.ReadLine());
                     foreach (var item in myrestaurant)
                     {
                         Console.WriteLine($"\nRestaurant name: {item.Restaurant.RestaurantName}, foodname: {item.FoodName}, {item.UnitPrice}");
                     }
+                    ClearScreen();
                 }
                 if (keyinfo.Key == ConsoleKey.D8)
                 {
-                    var allrest = admin.AllRestaurants();
-                    foreach (var item in allrest) Console.WriteLine($"Restaurant id: {item.Id}, name: {item.RestaurantName}");
+                    foreach (var item in admin.AllRestaurants()) Console.WriteLine($"Restaurant id: {item.Id}, name: {item.RestaurantName}");
                     var allcat = admin.AllCategories();
                     Console.WriteLine("\n");
                     foreach (var item in allcat) Console.WriteLine($"Category id: {item.Id}, name: {item.CategoryName}");
@@ -141,18 +149,23 @@ namespace ConsoleApp
                     Console.Write("category id: ");
                     var catid = Convert.ToInt32(Console.ReadLine());
                     restaurant.AddNewFoodboxForOneRestaurant(restid, catid, foodname, unitprice);
+                    ClearScreen();
                 }
                 if (keyinfo.Key == ConsoleKey.D9)
                 {
-                    var allcat = admin.AllCategories();
-                    Console.WriteLine("\n");
-                    foreach (var item in allcat) Console.WriteLine($"Category id: {item.Id}, name: {item.CategoryName}");
+                    foreach (var item in admin.AllCategories()) Console.WriteLine($"Category id: {item.Id}, name: {item.CategoryName}");
+                    ClearScreen();
                 }
                 if (keyinfo.Key == ConsoleKey.Escape)
                 {
                     break;
                 }
-                Console.ReadLine();
+
+                void ClearScreen()
+                {
+                    Console.ReadLine();
+                    Console.Clear();
+                }
             }
         }
     }

@@ -1,14 +1,8 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
 using DataLayer.Data;
 using DataLayer.Model;
-using Microsoft.EntityFrameworkCore.Query.Internal;
 
 namespace DataLayer.Backend
 {
@@ -21,23 +15,12 @@ namespace DataLayer.Backend
          * en metod för att kunna lägga till ett nytt restaurang objekt
          */
         static FoodboxContext db = new FoodboxContext();
-        //private int _userID;
-
-        //public AdminBackend(int id)
-        //{
-        //    _userID=id;
-        //}
         public static void PrepDatabase()
         {
             db.Database.EnsureDeleted();
             db.Database.EnsureCreated();
             db.Seed();
         }
-        //public Customer FindById(string username)
-        //{
-        //    var user = db.Customers.Where(x => x.UserName == username && x.Id == _userID);
-        //    return user;
-        //}
         public List<Customer> AllCustomer()
         {
             var q = db.Customers.Where(x => x.IsActive).Select(x => x);
@@ -53,10 +36,6 @@ namespace DataLayer.Backend
                     item.IsActive = false;
                     item.BannedDate = DateTime.Now;
                 }
-            }
-            else
-            {
-                throw new Exception("User Not Found!");
             }
             db.SaveChanges();
         }
